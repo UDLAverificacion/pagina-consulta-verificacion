@@ -386,11 +386,13 @@
     </div>
 
     <script>
+        let searchButton;
+
         // Espera a que todo el HTML esté cargado
         document.addEventListener('DOMContentLoaded', function() {
             
             // 1. Obtener los elementos que necesitamos controlar
-            const searchButton = document.getElementById('search-button');
+            searchButton = document.getElementById('search-button');
             const runInput = document.getElementById('run-input');
             const searchPage = document.getElementById('search-page');
             const resultsPage = document.getElementById('results-page');
@@ -400,7 +402,6 @@
                 
                 // 3. Cuando se haga clic, obtener el valor del campo de RUN
                 const runValue = runInput.value.trim(); // .trim() elimina espacios en blanco
-alert('Valor ingresado: "' + runValue + '"');
 
                 // 4. Comprobar si el RUN es el que queremos
                 if (runValue === '17828482-7') {
@@ -415,13 +416,11 @@ alert('Valor ingresado: "' + runValue + '"');
                 }
             });       // Función que Google llama cuando el reCAPTCHA es exitoso
 function onCaptchaSuccess() {
-  const searchButton = document.getElementById('search-button');
   searchButton.disabled = false; // Habilita el botón
 };
 
 // Función que Google llama si el reCAPTCHA expira
 function onCaptchaExpired() {
-  const searchButton = document.getElementById('search-button');
   searchButton.disabled = true; // Vuelve a deshabilitar el botón
 };
  
