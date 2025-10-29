@@ -238,7 +238,34 @@
             font-weight: bold;
             margin-top: 20px;
             font-size: 0.9em;
-        }
+        }/* Estilos para la primera parte de la página */
+#search-page .header {
+  background-color: #e0e0e0; /* Un gris claro para el fondo */
+  padding: 15px 20px; /* Espaciado interno */
+  margin-bottom: 30px; /* Espacio debajo del encabezado */
+  display: flex; /* Para poner los elementos en fila */
+  align-items: center; /* Centrar verticalmente */
+  gap: 20px; /* Espacio entre el logo y el texto */
+  border-bottom: 2px solid #ccc; /* Línea separadora abajo */
+}
+
+#search-page .header .logo-mineduc {
+  flex-shrink: 0; /* Evita que el logo se encoja */
+}
+
+#search-page .header .header-title {
+  font-size: 1.8em; /* Tamaño del texto */
+  font-weight: bold;
+  color: #333;
+  line-height: 1.2; /* Espaciado entre líneas del texto */
+}
+
+/* Si quieres que "Resultados Exámenes" salte de línea */
+#search-page .header .header-title::after {
+  content: " "; /* Añade un espacio después de "Publicación de" */
+  display: block; /* Fuerza el salto de línea */
+}
+
     </style>
 </head>
 <body>
@@ -247,12 +274,11 @@
 
         <div id="search-page">
             <div class="header">
-                <div class="logo-text">
-  <img src="imagen.png" alt="Logo Ministerio de Educación - Gobierno de Chile" width="200">
+  <div class="header-content"> <div class="logo-mineduc"> <img src="imagen.png" alt="Logo Ministerio de Educación - Gobierno de Chile" width="180">
+    </div>
+    <span class="header-title">Publicación de Resultados Exámenes</span> </div>
 </div>
 
-                <h1>Publicación de<br>Resultados<br>Exámenes.</h1>
-            </div>
             <div class="subheader">
                 Conectado desde la dirección IP: 10.244.0.0
             </div>
