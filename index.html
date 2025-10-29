@@ -390,44 +390,72 @@
     </div>
 
     <script>
-        let searchButton;
+  // --- INICIO DEL CÓDIGO CORREGIDO ---
 
-        // Espera a que todo el HTML esté cargado
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // 1. Obtener los elementos que necesitamos controlar
-            searchButton = document.getElementById('search-button');
-            const runInput = document.getElementById('run-input');
-            const searchPage = document.getElementById('search-page');
-            const resultsPage = document.getElementById('results-page');
+  // 1. Espera a que todo el HTML esté cargado
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Obtener los elementos que necesitamos
+    const searchButton = document.getElementById('search-button');
+    const runInput = document.getElementById('run-input');
+    const searchPage = document.getElementById('search-page');
+    const resultsPage = document.getElementById('results-page');
 
-            // 2. Añadir un "escuchador" de clics al botón
-            searchButton.addEventListener('click', function() {
-                
-                // 3. Cuando se haga clic, obtener el valor del campo de RUN
-                const runValue = runInput.value.replace(/\./g, '').replace(/-/g, '');
+    // 2. Añadir un "escuchador" de clics al botón
+    searchButton.addEventListener('click', function() {
+      
+      // 3. Limpiar el valor del RUN (quitar puntos y guion)
+      const runValue = runInput.value.replace(/\./g, '').replace(/-/g, '');
 
-                // 4. Comprobar si el RUN es el que queremos
-                if (runValue === '178284827') {
-                    // Si es correcto, ocultar la página de búsqueda
-                    searchPage.style.display = 'none';
-                    // Y mostrar la página de resultados
-                    resultsPage.style.display = 'block';
-                    resultsPage.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    // Si no es correcto, mostrar una alerta al usuario
-                    alert('RUN/IPE no encontrado o incorrecto.');
-                }
-            });       // Función que Google llama cuando el reCAPTCHA es exitoso
-function onCaptchaSuccess() {
-  searchButton.disabled = false; // Habilita el botón
-};
+      // 4. Comprobar si el RUN es el que queremos
+      if (runValue === '178284827') {
+        // Si es correcto, ocultar la página de búsqueda
+        searchPage.style.display = 'none';
+        
+        // y mostrar la página de resultados
+        resultsPage.style.display = 'block';
+        
+        // Opcional: Mover la vista al inicio de los resultados
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+      } else {
+        // Si no es correcto, mostrar una alerta
+        alert('RUN/IPE no encontrado o incorrecto.');
+      }
+    });
+  });
 
-// Función que Google llama si el reCAPTCHA expira
-function onCaptchaExpired() {
-  searchButton.disabled = true; // Vuelve a deshabilitar el botón
-};
- 
+  /**
+   * 5. Función que Google llama cuando el reCAPTCHA es exitoso
+   * Esta función DEBE ser global (estar fuera de DOMContentLoaded)
+   */
+  function onCaptchaSuccess() {
+    // Busca el botón EN ESTE MOMENTO y lo habilita
+    const searchButton = document.getElementById('search-button');
+    if (searchButton) {
+      searchButton.disabled = false;
+      // Opcional: Cambiar el estilo visualmente si el CSS no lo hace
+      searchButton.style.opacity = 1; 
+      searchButton.style.cursor = 'pointer';
+    }
+  }
+
+  /**
+   * 6. Función que Google llama si el reCAPTCHA expira
+   * Esta función DEBE ser global (estar fuera de DOMContentLoaded)
+   */
+  function onCaptchaExpired() {
+    // Busca el botón EN ESTE MOMENTO y lo deshabilita
+    const searchButton = document.getElementById('search-button');
+    if (searchButton) {
+      searchButton.disabled = true;
+      // Opcional: Cambiar el estilo visualmente si el CSS no lo hace
+      searchButton.style.opacity = 0.6; 
+      searchButton.style.cursor = 'not-allowed';
+    }
+  }
+  
+  // --- FIN DEL CÓDIGO CORREGIDO ---
 
     </script>
 </body>
