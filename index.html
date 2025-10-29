@@ -265,9 +265,27 @@
   content: " "; /* Añade un espacio después de "Publicación de" */
   display: block; /* Fuerza el salto de línea */
 }
-
     </style>
-</head>
+    #search-page .button {
+  background-color: #007bff; /* Azul */
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%; /* Ocupa todo el ancho */
+  margin-top: 15px; /* Espacio arriba */
+}
+
+#search-page .button:disabled {
+  background-color: #a0a0a0; /* Gris cuando está deshabilitado */
+  cursor: not-allowed;
+}
+
+</head><script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <body>
     
     <div class="container">
@@ -293,11 +311,14 @@
                     <input type="text" id="run-input" placeholder="12345678-9">
                 </div>
                 <p>Por favor ingrese el código captcha:</p>
-                <div class="captcha-placeholder">
-                    [CAPTCHA Placeholder]
-                </div>
+                <div class="g-recaptcha" 
+     data-sitekey="AQUÍ_VA_TU_CLAVE_DEL_SITIO_QUE_COPIASTE" 
+     data-callback="onCaptchaSuccess"
+     data-expired-callback="onCaptchaExpired">
+</div>
+
                 
-                <button id="search-button" class="button">Consultar Resultados</button>
+                <button id="search-button" class="button"disabled>Consultar Resultados</button>
                 
                 <p style="margin-top: 15px; font-size: 0.85em; color: #888;">Para la visualización de resultados se requiere un navegador actualizado.</p>
             </div>
@@ -392,7 +413,18 @@
                     alert('RUN/IPE no encontrado o incorrecto.');
                 }
             });
-        });
+        // Función que Google llama cuando el reCAPTCHA es exitoso
+function onCaptchaSuccess() {
+  const searchButton = document.getElementById('search-button');
+  searchButton.disabled = false; // Habilita el botón
+};
+
+// Función que Google llama si el reCAPTCHA expira
+function onCaptchaExpired() {
+  const searchButton = document.getElementById('search-button');
+  searchButton.disabled = true; // Vuelve a deshabilitar el botón
+};
+
     </script>
 </body>
 </html>
