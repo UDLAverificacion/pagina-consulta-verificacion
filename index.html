@@ -413,8 +413,7 @@ alert('Valor ingresado: "' + runValue + '"');
                     // Si no es correcto, mostrar una alerta al usuario
                     alert('RUN/IPE no encontrado o incorrecto.');
                 }
-            });
-        // Función que Google llama cuando el reCAPTCHA es exitoso
+            });       // Función que Google llama cuando el reCAPTCHA es exitoso
 function onCaptchaSuccess() {
   const searchButton = document.getElementById('search-button');
   searchButton.disabled = false; // Habilita el botón
@@ -425,6 +424,7 @@ function onCaptchaExpired() {
   const searchButton = document.getElementById('search-button');
   searchButton.disabled = true; // Vuelve a deshabilitar el botón
 };
+ 
 
     </script>
 </body>
