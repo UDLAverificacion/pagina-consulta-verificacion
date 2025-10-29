@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Resultados</title>
+    <style>
+        /* --- Estilos Generales --- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* --- Estilos Página de Búsqueda (Imagen 1) --- */
+        #search-page .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        #search-page .header .logo-text {
+            background-color: #e30613; 
+            width: 80px; 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-size: 0.8em; 
+            text-align: center; 
+            margin-right: 20px; 
+            border-radius: 4px;
+            border: 4px solid #0033a0; /* Borde azul */
+            box-sizing: border-box;
+        }
+        #search-page .header h1 {
+            font-size: 1.8em;
+            color: #333;
+            margin: 0;
+            line-height: 1.2;
+        }
+        #search-page .subheader {
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            color: #666;
+            font-size: 0.9em;
+            border-bottom: 1px solid #eee;
+        }
+        #search-page .info-box {
+            background-color: #e0f2f7;
+            border: 1px solid #b3e5fc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px;
+            display: flex;
+            align-items: flex-start;
+            color: #01579b;
+        }
+        #search-page .info-box span {
+            font-size: 1.2em;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        #search-page .info-box p {
+            margin: 0;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+        #search-page .results-section {
+            padding: 20px;
+            margin: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        #search-page .results-section h2 {
+            font-size: 1.3em;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        #search-page .results-section p {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        #search-page .input-group {
+            margin-bottom: 15px;
+        }
+        #search-page .input-group input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        #search-page .captcha-placeholder {
+            background-color: #eee; 
+            height: 40px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #777;
+            margin-top: 10px;
+        }
+        #search-page .button {
+            background-color: #0056b3; /* Color azul del gobierno */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #search-page .button:hover {
+            background-color: #004494;
+        }
+
+        /* --- Estilos Página de Resultados (Imagen 2) --- */
+        #results-page {
+            display: none; /* Oculto por defecto */
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            font-size: 10pt; /* Tamaño de letra pequeño como en la imagen */
+            line-height: 1.4;
+            color: #000;
+        }
+        #results-page .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        #results-page .logo-block {
+            background-color: #e30613;
+            color: white;
+            padding: 0;
+            border: 5px solid #0033a0;
+            width: 120px; 
+            text-align: center;
+            font-size: 0.9em;
+            line-height: 1.2;
+        }
+        #results-page .logo-block .page-count {
+            font-size: 1.4em; 
+            font-weight: bold; 
+            color: #fff; 
+            background-color: #0033a0; 
+            display: block; 
+            padding: 3px;
+            margin-bottom: 5px;
+        }
+         #results-page .logo-block span {
+             display: block;
+             padding: 5px;
+         }
+        #results-page .results-title {
+            text-align: right;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+        #results-page .info-text {
+            font-size: 0.85em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        #results-page .data-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+        #results-page .data-grid strong {
+            font-weight: bold;
+        }
+        #results-page .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+        #results-page .grades-table th,
+        #results-page .grades-table td {
+            border-bottom: 1px dotted #888;
+            padding: 8px 0;
+            text-align: left;
+        }
+        #results-page .grades-table th {
+            font-weight: bold;
+        }
+        #results-page .grades-table td:last-child {
+            text-align: right;
+            font-weight: bold;
+            padding-right: 5px;
+        }
+        #results-page .summary-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        #results-page .summary-grid span {
+            font-weight: bold;
+        }
+        #results-page .footer-text {
+            font-size: 0.8em;
+            color: #444;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        #results-page .timestamp {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+
+        <div id="search-page">
+            <div class="header">
+                <div class="logo-text">
+                    Ministerio de Educación<br>Gobierno de Chile
+                </div>
+                <h1>Publicación de<br>Resultados<br>Exámenes.</h1>
+            </div>
+            <div class="subheader">
+                Conectado desde la dirección IP: 10.244.0.0
+            </div>
+            <div class="info-box">
+                <span>ⓘ</span>
+                <p>Al ingresar su RUN/IPE usted podrá conocer las notas obtenidas en su proceso de examinación (validación de estudios y/o modalidad flexible).</p>
+            </div>
+            <div class="results-section">
+                <h2>Resultados de examinación (validación de estudios y/o modalidad flexible)</h2>
+                <p>Busca tus resultados RUN/IPE:</p>
+                <div class="input-group">
+                    <input type="text" id="run-input" placeholder="12345678-9">
+                </div>
+                <p>Por favor ingrese el código captcha:</p>
+                <div class="captcha-placeholder">
+                    [CAPTCHA Placeholder]
+                </div>
+                
+                <button id="search-button" class="button">Consultar Resultados</button>
+                
+                <p style="margin-top: 15px; font-size: 0.85em; color: #888;">Para la visualización de resultados se requiere un navegador actualizado.</p>
+            </div>
+        </div>
+
+        <div id="results-page">
+            
+            <div class="results-header">
+                <div class="logo-block">
+                    <span class="page-count">1 de 1</span>
+                    <span>Ministerio de Educación<br>Gobierno de Chile</span>
+                </div>
+                <div class="results-title">
+                    RESULTADOS EXÁMENES PROGRAMA:<br>
+                    MODALIDAD FLEXIBLE<br>
+                    MAYORES DE 18 AÑOS
+                </div>
+            </div>
+            
+            <p class="info-text">Los datos que se presentan a continuación son de carácter INFORMATIVO, no válidos para fines legales, sujetos a confirmación una vez entregada el acta de examen oficial por parte del establecimiento educacional que lo examinó.</p>
+            
+            <div class="data-grid">
+                <strong>RUN/IPE</strong>         <span>17828482-7</span>
+                <strong>APELLIDO PATERNO</strong>  <span>SALAS</span>
+                <strong>APELLIDO MATERNO</strong>  <span>GONZÁLEZ</span>
+                <strong>NOMBRES</strong>         <span>ROBERTO ALEJANDRO</span>
+                <strong>NIVEL/CICLO EXAMINADO</strong> <span>SEGUNDO CICLO (3° Y 4°) ED. MEDIA ADULTOS</span>
+                <strong>REGIÓN</strong>          <span>DEL MAULE</span>
+                <strong>FECHA EXÁMEN</strong>    <span>11-10-2025</span>
+                <strong>OPORTUNIDAD EXAMINACIÓN</strong> <span>2</span>
+                <strong>ENTIDAD EJECUTORA</strong> <span>FUNDACION LUXEMBURGO</span>
+            </div>
+            
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>ASIGNATURA</th>
+                        <th>NOTA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>CIENCIAS NATURALES</td><td>5.6</td></tr>
+                    <tr><td>CIENCIAS SOCIALES</td><td>6.0</td></tr>
+                    <tr><td>FILOSOFÍA Y PSICOLOGÍA</td><td>5.6</td></tr>
+                    <tr><td>INGLÉS</td><td>6.0</td></tr>
+                    <tr><td>LENGUA CASTELLANA Y COMUNICACIÓN</td><td>5.7</td></tr>
+                    <tr><td>MATEMÁTICAS</td><td>6.8</td></tr>
+                </tbody>
+            </table>
+            
+            <div class="summary-grid">
+                <strong>PROMEDIO GENERAL</strong> <span>5.5</span>
+                <strong>SITUACIÓN FINAL:</strong> <span>Aprobado</span>
+            </div>
+            
+            <p class="footer-text"><strong>APROBADO:</strong> Descargar su certificado de estudio en la página web www.ayudamineduc.cl, sección "Certificados en línea" digitando su RUN/IPE, a partir de 35 días hábiles después de terminado el período de examinación.</p>
+            <p class="footer-text"><strong>REPROBADO:</strong> Acercarse a las Oficinas de Atención Ciudadana y solicitar rendir la totalidad de los exámenes en otra fecha de examinación, según disponibilidad de cupos y plazos máximos de inscripción a una siguiente fecha.</p>
+            <p class="footer-text">En caso de consultas Ud. puede llamar al Call Center de Ayuda MINEDUC al teléfono 600 600 2626, o acudir a alguna de las 46 Oficinas de Atención Ciudadana ubicadas a lo largo del país. Ver oficinas y horarios de atención: https://www.ayudamineduc.cl/Estatico/info_dire.html</p>
+            
+            <p class="timestamp">29/10/2025 15:18:22</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Espera a que todo el HTML esté cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Obtener los elementos que necesitamos controlar
+            const searchButton = document.getElementById('search-button');
+            const runInput = document.getElementById('run-input');
+            const searchPage = document.getElementById('search-page');
+            const resultsPage = document.getElementById('results-page');
+
+            // 2. Añadir un "escuchador" de clics al botón
+            searchButton.addEventListener('click', function() {
+                
+                // 3. Cuando se haga clic, obtener el valor del campo de RUN
+                const runValue = runInput.value.trim(); // .trim() elimina espacios en blanco
+
+                // 4. Comprobar si el RUN es el que queremos
+                if (runValue === '17828482-7') {
+                    // Si es correcto, ocultar la página de búsqueda
+                    searchPage.style.display = 'none';
+                    // Y mostrar la página de resultados
+                    resultsPage.style.display = 'block';
+                } else {
+                    // Si no es correcto, mostrar una alerta al usuario
+                    alert('RUN/IPE no encontrado o incorrecto.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
