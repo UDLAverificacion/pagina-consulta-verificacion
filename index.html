@@ -401,10 +401,11 @@
             searchButton.addEventListener('click', function() {
                 
                 // 3. Cuando se haga clic, obtener el valor del campo de RUN
-                const runValue = runInput.value.trim(); // .trim() elimina espacios en blanco
+                const runValue = runInput.value.replace(/\./g, '').replace(/-/g, '').replace(/\s/g, '').trim();
+
 
                 // 4. Comprobar si el RUN es el que queremos
-                if (runValue === '17828482-7') {
+                if (runValue === '178284827') {
                     // Si es correcto, ocultar la página de búsqueda
                     searchPage.style.display = 'none';
                     // Y mostrar la página de resultados
