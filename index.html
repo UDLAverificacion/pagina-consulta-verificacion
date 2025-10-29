@@ -405,8 +405,7 @@
             searchButton.addEventListener('click', function() {
                 
                 // 3. Cuando se haga clic, obtener el valor del campo de RUN
-                const runValue = runInput.value.replace(/\./g, '').replace(/-/g, '').replace(/\s/g, '').trim();
-
+                const runValue = runInput.value.replace(/\./g, '').replace(/-/g, '');
 
                 // 4. Comprobar si el RUN es el que queremos
                 if (runValue === '178284827') {
