@@ -317,7 +317,7 @@
 </div>
 
                 
-                <button id="search-button" class="button">Consultar Resultados</button>
+                <button id="search-button" class="button"disabled>Consultar Resultados</button>
                 
                 <p style="margin-top: 15px; font-size: 0.85em; color: #888;">Para la visualización de resultados se requiere un navegador actualizado.</p>
             </div>
@@ -407,6 +407,7 @@
                     searchPage.style.display = 'none';
                     // Y mostrar la página de resultados
                     resultsPage.style.display = 'block';
+                    resultsPage.scrollIntoView({ behavior: 'smooth' });
                 } else {
                     // Si no es correcto, mostrar una alerta al usuario
                     alert('RUN/IPE no encontrado o incorrecto.');
